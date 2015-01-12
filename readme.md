@@ -369,6 +369,7 @@ the keys being three-character currency codes and the values being `Decimal()`
 objects representing the rates.
 
 ```python
+from decimal import Decimal
 from money import Money
 import vat_moss.exchange_rates
 
@@ -395,6 +396,7 @@ Danish Krone, Swedish Krona and Norwegian Krone, the symbols are modified by
 adding the country initial before `kr`, as is typical in English writing.
 
 ```python
+from decimal import Decimal
 from money import Money
 import vat_moss.exchange_rates
 
