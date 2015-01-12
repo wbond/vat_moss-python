@@ -51,6 +51,12 @@ My current approach to VAT place of supply proof and rate selection is to:
  - [Determine VAT Rate from GeoLite2 Database](#determine-vat-rate-from-geolite2-database)
  - [Determine VAT Rate from International Phone Number](#determine-vat-rate-from-international-phone-number)
  - [Validate a VAT ID](#validate-a-vat-id)
+ - [Fetching Exchange Rates for Invoices](#fetching-exchange-rates-for-invoices)
+ - [Configuring money Package Exchange Rates](#configuring-money-package-exchange-rates)
+ - [Formatting European Currencies for Invoices](#formatting-european-currencies-for-invoices)
+
+Code examples are written in Python 3. The only change that should be needed to
+convert them to Python 2 is to replace `urllib.error` with `urllib2`.
 
 ### Determine VAT Rate from Billing Address
 
@@ -313,6 +319,112 @@ except (urllib.error.URLError):
     # Tell your customer they have to pay VAT and can recover it
     # through appropriate accounting practices.
 ```
+
+### Fetching Exchange Rates for Invoices
+
+When creating invoices, it is necessary to present the VAT tax amount in the
+national currency of the country the customer resides in. Since most merchants
+will be selling in a single currency, it will be often necessary to convert
+amount into one of the 11 currencies used throughout the EU and Norway.
+
+The exchange rates used for these conversions should come from the [European
+Central Bank](https://www.ecb.europa.eu/stats/exchange/eurofxref/html/index.en.html).
+They provide an [XML file](https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml)
+that is updated on business days between 2:15 and 3:00pm CET.
+
+The `vat_moss.exchange_rates.fetch()` method will download this XML file and
+return a tuple containing the date of rates, as a string in the format
+`YYYY-MM-DD`, and a dict object with the keys being three-character currency
+codes and the values being `Decimal()` objects of the current rates, with the
+Euro (`EUR`) being the base.
+
+Since these rates are only updated once a day, and the fetching of the XML
+could be subject to latency, the rates should be fetched once a day and cached
+locally. To prevent introducing lag to visitors of your site, it may make the
+most sense to use a scheduled job to fetch the rates and cache then. Personally,
+I fetch the rates daily and store them in a database table for future reference.
+
+```python
+import vat_moss.exchange_rates
+import urllib.error
+
+try:
+    date, rates = vat_moss.exchange_rates.fetch()
+    # Add rates to database table, or other local cache
+
+except (urllib.error.URLError):
+    # An error occured fetching the rates - requeue the job
+```
+
+### Configuring money Package Exchange Rates
+
+The [money package](https://pypi.python.org/pypi/money) for Python is a
+reasonable choice for working with monetary values. The
+`vat_moss.exchange_rates` submodule includes a function that will use the
+exchange rates from the ECB to configure the exchange rates for `money`.
+
+The first parameter is the base currency, which should always be `EUR` when
+working with the data from the ECB. The second parameter should be a dict with
+the keys being three-character currency codes and the values being `Decimal()`
+objects representing the rates.
+
+```python
+from money import Money
+import vat_moss.exchange_rates
+
+# Grab the exchange rates from you local cache
+rates = {'EUR': Decimal('1.0000'), 'GBP': Decimal('0.77990'),}
+vat_moss.exchange_rates.setup_xrates('EUR', rates)
+
+# Now work with your money
+amount = Money('10.00', 'USD')
+eur_amount = amount.to('EUR')
+```
+
+### Formatting European Currencies for Invoices
+
+With the laws concerning invoices, it is necessary to show at least the VAT tax
+due in the national currency of the country where your customer resides. To
+help in properly formatting the currency amount for the invoice, the
+`vat_moss.exchange_rates.format(amount, currency=None)` function exists.
+
+This function accepts either a `Money` object, or a `Decimal` object plus a
+string three-character currency code. It returns the amount formatted using the
+local country rules for amounts. For currencies that share symbols, such as the
+Danish Krone, Swedish Krona and Norwegian Krone, the symbols are modified by
+adding the country initial before `kr`, as is typical in English writing.
+
+```python
+from money import Money
+import vat_moss.exchange_rates
+
+
+# Using a Money object
+amount = Money('4101.79', 'USD')
+print(vat_moss.exchange_rates.format(amount))
+
+# Using a decimal and currency code
+amount = Decimal('4101.79')
+currency = 'USD'
+print(vat_moss.exchange_rates.format(amount, currency))
+```
+
+The various output formats that are returned by this function include:
+
+| Currency | Output                  |
+|------------------------------------|
+| BGN      | 4,101.79 Lev            |
+| CZK      | 4.101,79 Kč             |
+| DKK      | 4.101,79 Dkr            |
+| EUR      | €4.101,79               |
+| GBP      | £4,101.79               |
+| HRK      | 4.101,79 Kn             |
+| HUF      | 4.101,79 Ft             |
+| NOK      | 4.101,79 Nkr            |
+| PLN      | 4 101,79 Zł             |
+| RON      | 4.101,79 Lei            |
+| SEK      | 4 101,79 Skr            |
+| USD      | $4,101.79               |
 
 ## Tests
 
