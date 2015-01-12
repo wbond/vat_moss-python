@@ -430,7 +430,8 @@ The various output formats that are returned by this function include:
 
 ## Tests
 
-Run the tests via:
+Almost [500 unit and integrations tests](tests/) are included with this
+library. They can be run by executing the following in a terminal:
 
 ```bash
 python tests.py
