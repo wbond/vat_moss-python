@@ -414,7 +414,7 @@ print(vat_moss.exchange_rates.format(amount, currency))
 The various output formats that are returned by this function include:
 
 | Currency | Output                  |
-|------------------------------------|
+| -------- | ----------------------- |
 | BGN      | 4,101.79 Lev            |
 | CZK      | 4.101,79 Kč             |
 | DKK      | 4.101,79 Dkr            |
