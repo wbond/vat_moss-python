@@ -400,7 +400,6 @@ from decimal import Decimal
 from money import Money
 import vat_moss.exchange_rates
 
-
 # Using a Money object
 amount = Money('4101.79', 'USD')
 print(vat_moss.exchange_rates.format(amount))
