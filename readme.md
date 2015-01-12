@@ -51,9 +51,9 @@ My current approach to VAT place of supply proof and rate selection is to:
  - [Determine VAT Rate from GeoLite2 Database](#determine-vat-rate-from-geolite2-database)
  - [Determine VAT Rate from International Phone Number](#determine-vat-rate-from-international-phone-number)
  - [Validate a VAT ID](#validate-a-vat-id)
- - [Fetching Exchange Rates for Invoices](#fetching-exchange-rates-for-invoices)
- - [Configuring money Package Exchange Rates](#configuring-money-package-exchange-rates)
- - [Formatting European Currencies for Invoices](#formatting-european-currencies-for-invoices)
+ - [Fetch Exchange Rates for Invoices](#fetch-exchange-rates-for-invoices)
+ - [Configure money Package Exchange Rates](#configure-money-package-exchange-rates)
+ - [Format European Currencies for Invoices](#format-european-currencies-for-invoices)
 
 Code examples are written in Python 3. The only change that should be needed to
 convert them to Python 2 is to replace `urllib.error` with `urllib2`.
@@ -320,7 +320,7 @@ except (urllib.error.URLError):
     # through appropriate accounting practices.
 ```
 
-### Fetching Exchange Rates for Invoices
+### Fetch Exchange Rates for Invoices
 
 When creating invoices, it is necessary to present the VAT tax amount in the
 national currency of the country the customer resides in. Since most merchants
@@ -356,7 +356,7 @@ except (urllib.error.URLError):
     # An error occured fetching the rates - requeue the job
 ```
 
-### Configuring money Package Exchange Rates
+### Configure money Package Exchange Rates
 
 The [money package](https://pypi.python.org/pypi/money) for Python is a
 reasonable choice for working with monetary values. The
@@ -382,7 +382,7 @@ amount = Money('10.00', 'USD')
 eur_amount = amount.to('EUR')
 ```
 
-### Formatting European Currencies for Invoices
+### Format European Currencies for Invoices
 
 With the laws concerning invoices, it is necessary to show at least the VAT tax
 due in the national currency of the country where your customer resides. To
