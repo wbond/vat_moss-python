@@ -12,7 +12,7 @@ registration, exchange rates and more.
 
 Python 2.7, 3.3 and 3.4.
 
-## Usage
+## Approach
 
 My current approach to VAT place of supply proof and rate selection is to:
 
@@ -36,7 +36,8 @@ My current approach to VAT place of supply proof and rate selection is to:
     of supply proof.
  6. If the user is located in an EU country, allow them to enter their VAT ID.
     Validate this ID. If it is valid, deduct the appropriate percentage amount
-    from VAT-inclusive prices and let the user check out.
+    from VAT-inclusive prices and let the user check out. To calculate the
+    VAT-exclusive price, divide the VAT-include price by (1.0 + VAT rate).
  7. Once the customer has successfully checked out, generate an invoice that
     meets VAT requirements. This means including things like your VAT ID for
     EU customers and including the customers VAT ID (if provided), along with
@@ -45,54 +46,11 @@ My current approach to VAT place of supply proof and rate selection is to:
 
 ## API
 
- - Determine VAT Rate from Billing Address
- - Determine VAT Rate from Declared Residence
- - Determine VAT Rate from GeoLite2 Database
- - Determine VAT Rate from International Phone Number
- - Validate a VAT ID
-
-### Validate a VAT ID
-
-EU businesses do not need to be charged VAT. Instead, under the VAT reverse
-charge mechanism, you provide them with an invoice listing the price of your
-digital services, and they are responsible for figuring out the VAT due and
-paying it, according to their normal accounting practices.
-
-The way to determine if a customer in the EU is a business is to validate their
-VAT ID.
-
-VAT IDs should contain the two-character country code. See
-http://en.wikipedia.org/wiki/VAT_identification_number for more info.
-
-The VAT ID can have spaces, dashes or periods within it. Some basic formatting
-checks are done to prevent expensive HTTP calls to the web services that
-validate the numbers. However, extensive checksum are not validated. If the
-format looks fairly correct, it gets sent along to the web server.
-
-
-```python
-import vat_moss.id
-import vat_moss.errors
-import urllib.error
-
-try:
-    result = vat_moss.id.validate('GB GD001')
-    if result:
-        country_code, normalized_id, company_name = result
-        # Do your processing to not charge VAT
-
-except (vat_moss.errors.InvalidError):
-    # Make the user enter a new value
-
-except (urllib.error.URLError):
-    # There was an error contacting the validation API.
-    #
-    # Unfortunately this tends to happen a lot with EU countries because the
-    # VIES service is a proxy for 28 separate member-state APIs.
-    #
-    # Tell your customer they have to pay VAT and can recover it
-    # through appropriate accounting practices.
-```
+ - [Determine VAT Rate from Billing Address](#determine-vat-rate-from-billing-address)
+ - [Determine VAT Rate from Declared Residence](#determine-vat-rate-from-declared-residence)
+ - [Determine VAT Rate from GeoLite2 Database](#determine-vat-rate-from-geolite2-database)
+ - [Determine VAT Rate from International Phone Number](#determine-vat-rate-from-international-phone-number)
+ - [Validate a VAT ID](#validate-a-vat-id)
 
 ### Determine VAT Rate from Billing Address
 
@@ -312,6 +270,49 @@ code.
 
 In those situations, a `vat_moss.errors.UndefinitiveError()` exception will be
 raised.
+
+### Validate a VAT ID
+
+EU businesses do not need to be charged VAT. Instead, under the VAT reverse
+charge mechanism, you provide them with an invoice listing the price of your
+digital services, and they are responsible for figuring out the VAT due and
+paying it, according to their normal accounting practices.
+
+The way to determine if a customer in the EU is a business is to validate their
+VAT ID.
+
+VAT IDs should contain the two-character country code. See
+http://en.wikipedia.org/wiki/VAT_identification_number for more info.
+
+The VAT ID can have spaces, dashes or periods within it. Some basic formatting
+checks are done to prevent expensive HTTP calls to the web services that
+validate the numbers. However, extensive checksum are not validated. If the
+format looks fairly correct, it gets sent along to the web server.
+
+
+```python
+import vat_moss.id
+import vat_moss.errors
+import urllib.error
+
+try:
+    result = vat_moss.id.validate('GB GD001')
+    if result:
+        country_code, normalized_id, company_name = result
+        # Do your processing to not charge VAT
+
+except (vat_moss.errors.InvalidError):
+    # Make the user enter a new value
+
+except (urllib.error.URLError):
+    # There was an error contacting the validation API.
+    #
+    # Unfortunately this tends to happen a lot with EU countries because the
+    # VIES service is a proxy for 28 separate member-state APIs.
+    #
+    # Tell your customer they have to pay VAT and can recover it
+    # through appropriate accounting practices.
+```
 
 ## Tests
 
