@@ -1,48 +1,43 @@
 # vat_moss
 
-A library to determine the VAT rate for a customer of a company providing
-digital services to individuals in the EU or Norway.
+A Python library for VAT MOSS tasks required of non-EU companies selling
+software to customers in the EU and Norway. Functionality includes:
 
-**This readme primarily covers the Python `vat_moss` library API. I have written
-an extensive amount of guidance in the [VAT MOSS Overview](overview.md). I
-highly recommend you read that first.** It includes information about invoices,
-registration, exchange rates and more.
+ - Determining the VAT rate for a customer based on any of the following:
+   - Billing address
+   - Declared country of residence
+   - IP address geolocation via a GeoLite2 database
+   - Telephone number
+ - Validation of EU and Norwegian VAT IDs against government web services
+ - Tools for generating VAT-compliant invoices:
+   - Fetching European Central Bank exchange rate information
+   - Configuring exchange rate information for the `money` package
+   - Formatting foreign currencies when displaying VAT tax due in national currency
 
-## Supports
+This library has codified all of the standard rate VAT tax rules as of January
+2015, and includes code to handle the various VAT exemptions that occur in the
+EU. This was primarily built to support companies selling software licenses or
+SaaS. *Ebook tax rates may be different - this library does not currently
+differentiate for those.*
 
-Python 2.7, 3.3 and 3.4.
+## Resources
 
-## Approach
+In the process of writing this library, I performed quite a bit of research
+about VAT, VAT MOSS and how to deal with it as a small software company.
+Hopefully the information below will prove useful to others:
 
-My current approach to VAT place of supply proof and rate selection is to:
+ - [VAT MOSS Overview](overview.md) - a document discussing the non-code aspects
+   of VAT MOSS, such as general concepts and terms, proof of supply details,
+   exchange rates, invoices, registration and returns
+ - [VAT MOSS Implementation Approach](approach.md) - a document discussing how
+   I am using this library and `vat_moss-js` to deal with VAT MOSS
+ - [vat_moss-js](https://github.com/wbond/vat_moss-js) - a port of this library
+   to Javascript. Some features are different primarily due to the fact that
+   the VAT validation webservices do not support cross-domain AJAX requests.
 
- 1. Using geolocation on the user's IP address to determine what country
-    they are likely in
- 2. Show prices VAT-inclusive for EU countries. In EU countries, my customers
-    will pay 30% more to cover the VAT, plus exchange rate fluctuations and
-    costs related to paying the collected VAT to the HRMC. All of this takes
-    time and things like international wire tranfers cost money. Currently the
-    highest VAT rate is 27%. Many are around 20%. 30% covers the highest, plus
-    provides a little extra to cover the costs related to VAT compliance.
- 3. When the user checks out, have them self-declare residence country
-    (pre-populated from IP geolocation). If their country has any VAT
-    exceptions, let them pick one.
- 4. If the IP geolocation and declared residence match, allow the user to check
-    out. You have two pieces of non-contradictory place of supply proof.
- 5. If the IP geolocation and declared residence do not match, ask the user
-    for their phone number and compare with geolocation and declared residence.
-    If any two match, let the user check out. Otherwise ask them to resolve the
-    discrepency. Save the two non-conflicting pieces of information as place
-    of supply proof.
- 6. If the user is located in an EU country, allow them to enter their VAT ID.
-    Validate this ID. If it is valid, deduct the appropriate percentage amount
-    from VAT-inclusive prices and let the user check out. To calculate the
-    VAT-exclusive price, divide the VAT-include price by (1.0 + VAT rate).
- 7. Once the customer has successfully checked out, generate an invoice that
-    meets VAT requirements. This means including things like your VAT ID for
-    EU customers and including the customers VAT ID (if provided), along with
-    some other country-specific currency requirements. See the 
-    [VAT MOSS Overview](overview.md) for more information.
+## Dependencies
+
+Python 2.7, 3.3 or 3.4. *No third-party packages required.*
 
 ## API
 
