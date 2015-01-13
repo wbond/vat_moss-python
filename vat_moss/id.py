@@ -16,7 +16,7 @@ except (ImportError):
     from urllib2 import Request, urlopen, HTTPError, URLError
     str_cls = unicode
 
-from .errors import InvalidError, WebServiceError
+from .errors import InvalidError, WebServiceError, WebServiceUnavailableError
 
 
 
@@ -33,7 +33,9 @@ def validate(vat_id):
     :raises:
         ValueError - If the is not a string or is not in the format of two characters number an identifier
         InvalidError - If the VAT ID is not valid
-        urllib.error.URLError/urllib2.URLError - If there is an issue communicating with VIES or data.brreg.no. This is common with VIES since it is proxying to various member-state-run APIs.
+        WebServiceUnavailableError - If the VIES VAT ID service is unable to process the request - this is fairly common
+        WebServiceError - If there was an error parsing the response from the server - usually this means something changed in the webservice
+        urllib.error.URLError/urllib2.URLError - If there is an issue communicating with VIES or data.brreg.no
 
     :return:
         None if the VAT ID is blank or not for an EU country or Norway
@@ -172,7 +174,16 @@ def validate(vat_id):
         request = Request('http://ec.europa.eu/taxation_customs/vies/services/checkVatService')
         request.add_header('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8')
 
-        response = urlopen(request, post_data.encode('utf-8'))
+        try:
+            response = urlopen(request, post_data.encode('utf-8'))
+        except (HTTPError) as e:
+            # If one of the country VAT ID services is down, we get a 500
+            if e.code == 500:
+                raise WebServiceUnavailableError('VAT ID validation is not currently available')
+
+            # If we get anything but a 500 we want the exception to be recorded
+            raise
+
         _, params = cgi.parse_header(response.headers['Content-Type'])
         if 'charset' in params:
             encoding = params['charset']

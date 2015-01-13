@@ -58,13 +58,16 @@ class IdTests(unittest.TestCase):
 
     @data('valid_ids', True)
     def validate_id(self, vat_id, expected_normalized_vat_id, expected_country_code):
-        result = vat_moss.id.validate(vat_id)
-        if result:
-            country_code, normalized_vat_id, name = result
-            self.assertEqual(expected_country_code, country_code)
-            self.assertEqual(expected_normalized_vat_id, normalized_vat_id)
-        else:
-            self.assertEqual(expected_normalized_vat_id, result)
+        try:
+            result = vat_moss.id.validate(vat_id)
+            if result:
+                country_code, normalized_vat_id, name = result
+                self.assertEqual(expected_country_code, country_code)
+                self.assertEqual(expected_normalized_vat_id, normalized_vat_id)
+            else:
+                self.assertEqual(expected_normalized_vat_id, result)
+        except (vat_moss.errors.WebServiceUnavailableError) as e:
+            return unittest.skip('VIES webservice unavailable')
 
     @data('invalid_ids')
     def validate_id_invalid(self, vat_id):

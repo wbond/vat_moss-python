@@ -36,3 +36,11 @@ class WebServiceError(URLError):
     """
 
     pass
+
+
+class WebServiceUnavailableError(WebServiceError):
+    """
+    If the VIES service VAT ID check was unavailable at the time of the request
+    """
+
+    pass

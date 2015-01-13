@@ -300,8 +300,8 @@ try:
 except (vat_moss.errors.InvalidError):
     # Make the user enter a new value
 
-except (urllib.error.URLError):
-    # There was an error contacting the validation API.
+except (vat_moss.errors.WebServiceUnavailableError):
+    # There was an error processing the request within the VIES service.
     #
     # Unfortunately this tends to happen a lot with EU countries because the
     # VIES service is a proxy for 28 separate member-state APIs.
