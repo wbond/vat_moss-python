@@ -5,9 +5,9 @@ businesses, the EU requires non-EU-based businesses to collect VAT on sales of
 [digital services](https://www.gov.uk/vat-on-digital-services-in-the-eu) to
 consumers located in the EU.
 
-This means any US, Candaian, etc business selling SasS, software licenses,
+This means any US, Canadian, etc business selling SasS, software licenses,
 ebooks, music, or other digital goods needs to collect VAT. Thankfully on
-January 1st, 2015, the concerpt of the VAT Mini One-Stop-Shop was introduces.
+January 1st, 2015, the concept of the VAT Mini One-Stop-Shop was introduced.
 This allows companies to register with a single EU country (member state) and
 submit all VAT tax money collected to that one country. Otherwise businesses
 would have to submit returns to 28 different countries.
@@ -47,7 +47,7 @@ EU is required from your first sale.
 ## Selling Knowledge, One Transaction at a Time
 
 There are quite a number of SaaS companies out there that are willing to help
-with some parts of this process. And they'll charge somewhere between 2-5% of
+with *some* parts of this process. And they'll charge somewhere between 2-5% of
 your sales price for it. Some even want a flat monthly fee in addition to
 per-transaction fees. I wasn't really keen on paying that much, especially
 since it wasn't terribly clear to me exactly what value they were providing.
@@ -82,7 +82,7 @@ services.
 
 I am not a tax lawyer. I am a software engineer and entreprenuer. Do not take
 tax advice from me. I provide no warranty or guarantee about this information,
-whether explicit or implies. I am not responsible for any damages, liability
+whether explicit or implied. I am not responsible for any damages, liability
 or claims arising from or in connection with using the information or code I
 provide.
 
@@ -137,16 +137,19 @@ register for the British government services. You need that to log in.
 For each sale you need to have two pieces of non-contradictory place of supply
 proof. This can be any of the following:
 
- - Billing address or self-declared location of residence
+ - Billing address
+ - Self-declared location of residence
  - Phone number mapped to country/region
  - IP address w/ geolocation
  - Country of issuing bank for credit card (PayPal does not provide)
 
 Unless you do some work to authorize a credit card before capture and don't use
-PayPal, the country of issuing bank is not very helpful.
+PayPal, the country of issuing bank is not very helpful. A user's IP address
+and phone number alone aren't specific enough to handle a number of the regions
+exempt from VAT, since they are individual cities.
 
-The `vat_moss` Python library helps in mapping the first three options to VAT
-rates.
+The `vat_moss` Python library helps in mapping the first four options to VAT
+rates, including handling of all of the exceptions.
 
 ## Invoices
 
@@ -240,8 +243,9 @@ include:
 
 ## Merchandise Returns/Chargebacks
 
-In order to get VAT returned on returns or chargebacks, you will have to file
-an ammended return with corrections to the HMRC. See
+In order to get VAT refunded to you when you give users returns or when
+chargebacks occur, you will have to file an ammended return with corrections to
+the HMRC. See
 http://www.ion.icaew.com/ClientFiles/c1db2be4-7bd5-41f3-996a-764f237080bb/MOSS%20Helpsheet%203%20QandAs.pdf
 for questions and answers related to this.
 
