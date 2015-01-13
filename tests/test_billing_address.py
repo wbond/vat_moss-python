@@ -145,5 +145,5 @@ class BillingAddressTests(unittest.TestCase):
         )
 
     @data('invalid_addresses')
-    def validate_id_invalid(self, country_code, postal_code, city):
+    def calculate_rate_invalid(self, country_code, postal_code, city):
         self.assertRaises(ValueError, vat_moss.billing_address.calculate_rate, country_code, postal_code, city)
