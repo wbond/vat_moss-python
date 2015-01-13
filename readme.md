@@ -82,7 +82,7 @@ try:
 
     result = vat_moss.billing_address.calculate_rate(country_code, postal_code, city)
     rate, country_code, exception_name = result
-    
+
     # Save place of supply proof
 
 except (ValueError):
@@ -131,7 +131,7 @@ try:
 
     result = vat_moss.declared_residence.calculate_rate(country_code, exception_name)
     rate, country_code, exception_name = result
-    
+
     # Save place of supply proof
 
 except (ValueError):
@@ -189,7 +189,7 @@ try:
 
     result = vat_moss.geoip2.calculate_rate(country_code, subdivision_name, city_name, address_country_code, address_exception)
     rate, country_code, exception_name = result
-    
+
     # Save place of supply proof
 
 except (ValueError):
@@ -246,7 +246,7 @@ try:
 
     result = vat_moss.phone_number.calculate_rate(phone_number, address_country_code, address_exception)
     rate, country_code, exception_name = result
-    
+
     # Save place of supply proof
 
 except (ValueError):
