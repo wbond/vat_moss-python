@@ -18,18 +18,18 @@ from .errors import UndefinitiveError
 
 def calculate_rate(phone_number, address_country_code=None, address_exception=None):
     """
-    Calculates the VAT rates based on a telephone number
+    Calculates the VAT rate based on a telephone number
 
     :param phone_number:
         The string phone number, in international format with leading +
 
     :param address_country_code:
-        The users country_code, as detected from billing_address or
+        The user's country_code, as detected from billing_address or
         declared_residence. This prevents an UndefinitiveError from being
         raised.
 
     :param address_exception:
-        The users exception name, as detected from billing_address or
+        The user's exception name, as detected from billing_address or
         declared_residence. This prevents an UndefinitiveError from being
         raised.
 

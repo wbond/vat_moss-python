@@ -24,10 +24,10 @@ def calculate_rate(country_code, exception_name):
 
     :param exception_name:
         The name of an exception for the country, as returned from
-        declared_residence_options()
+        vat_moss.declared_residence.options()
 
     :raises:
-        ValueError - if country code is not two characers, or exception_name is not None or a valid exception from options()
+        ValueError - if country_code is not two characers, or exception_name is not None or a valid exception from options()
 
     :return:
         A tuple of (Decimal VAT rate, country_code, exception name [or None])
@@ -74,7 +74,7 @@ def options():
     The country codes and names are from ISO 3166-1.
 
     :return:
-        A list of dicts objects each with th keys "name", "code" and
+        A list of dicts objects each with the keys "name", "code" and
         "exceptions"
     """
 

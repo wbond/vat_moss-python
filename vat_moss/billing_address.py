@@ -17,7 +17,8 @@ from . import rates
 
 def calculate_rate(country_code, postal_code, city):
     """
-    If VAT should be collected based on address information provided
+    Calculates the VAT rate that should be collected based on address
+    information provided
 
     :param country_code:
         The two-character country code
