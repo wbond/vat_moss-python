@@ -55,13 +55,8 @@ convert them to Python 2 is to replace `urllib.error` with `urllib2`.
 
 ### Determine VAT Rate from Billing Address
 
-*Either this method, or Determine VAT Rate from Declared Residence, can be used
-as one piece of location proof. Using both will not result in two pieces of
-proof since both are user-provided locations.*
-
 The user's VAT Rate can be determined by processing a payment and using the
-billing address from the payment provider, or prompting the user to input their
-country (code), postal code and city name.
+billing address from the payment provider.
 
 The method signature is
 `vat_moss.billing_address.calculate_rate(country_code, postal_code, city)`.
@@ -80,7 +75,7 @@ for a full list.
 import vat_moss.billing_address
 
 try:
-    # Values from user input or payment provider
+    # Values from payment provider
     country_code = 'US'
     postal_code = '01950'
     city = 'Newburyport'
@@ -99,10 +94,6 @@ name, detected rate and any exception name.
 
 ### Determine VAT Rate from Declared Residence
 
-*Either this method, or Determine VAT Rate from Billing Address, can be used
-as one piece of location proof. Using both will not result in two pieces of
-proof since both are user-provided locations.*
-
 The user's VAT Rate can be determined by prompting the user with a list of
 valid countries obtained from `vat_moss.declared_residence.options()`. If the
 user chooses a country with one or more exceptions, the user should be
@@ -118,16 +109,20 @@ This will return a tuple of
  - `(Decimal('0.19'), 'DE', None)`
  - `(Decimal('0.0'), 'DE', 'Heligoland')`
 
+The exception name will be one of the exemptions to the normal VAT rates. See
+the end of http://ec.europa.eu/taxation_customs/resources/documents/taxation/vat/how_vat_works/rates/vat_rates_en.pdf
+for a full list.
+
 ```python
 import vat_moss.declared_residence
 
 try:
     # Loop through this list of dicts and build a <select> using the 'name' key
     # as the text and 'code' key as the value. The 'exceptions' key is a list of
-    # valid VAT exceptions for that country. You will probably need to write
-    # some JS to show a checkbox if the selected country has exception, and then
-    # present the user with another <select> allowing then to pick "None" or
-    # one of the exception names.
+    # valid VAT exception names for that country. You will probably need to
+    # write some JS to show a checkbox if the selected country has exceptions,
+    # and then present the user with another <select> allowing then to pick
+    # "None" or one of the exception names.
     residence_options = vat_moss.declared_residence.options()
 
     # Values from user input
