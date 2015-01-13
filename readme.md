@@ -30,8 +30,8 @@ Hopefully the information below will prove useful to others:
    of VAT MOSS, such as general concepts and terms, proof of supply details,
    exchange rates, invoices, registration and returns
  - [VAT MOSS Implementation Approach](approach.md) - a document discussing how
-   I am using this library and `vat-moss-js` to deal with VAT MOSS
- - [vat-moss-js](https://github.com/wbond/vat-moss-js) - a port of this library
+   I am using this library and `vat-moss.js` to deal with VAT MOSS
+ - [vat-moss.js](https://github.com/wbond/vat-moss.js) - a port of this library
    to Javascript. Some features are different primarily due to the fact that
    the VAT validation webservices do not support cross-domain AJAX requests.
 
