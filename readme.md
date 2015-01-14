@@ -43,6 +43,12 @@ Python 2.7, 3.3 or 3.4. *No third-party packages required.*
 
 0.9.0
 
+## Installation
+
+```bash
+pip install git+https://github.com/wbond/vat_moss-python
+```
+
 ## API
 
  - [Determine VAT Rate from Billing Address](#determine-vat-rate-from-billing-address)
