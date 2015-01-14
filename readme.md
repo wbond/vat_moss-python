@@ -39,6 +39,10 @@ Hopefully the information below will prove useful to others:
 
 Python 2.7, 3.3 or 3.4. *No third-party packages required.*
 
+## Version
+
+0.9.0
+
 ## API
 
  - [Determine VAT Rate from Billing Address](#determine-vat-rate-from-billing-address)
