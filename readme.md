@@ -46,7 +46,7 @@ Python 2.7, 3.3 or 3.4. *No third-party packages required.*
 ## Installation
 
 ```bash
-pip install git+https://github.com/wbond/vat_moss-python
+pip install vat_moss
 ```
 
 ## API
