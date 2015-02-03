@@ -71,3 +71,22 @@ class DeclaredResidenceTests(unittest.TestCase):
         self.assertEqual(result_rate, expected_rate)
         self.assertEqual(result_country_code, expected_country_code)
         self.assertEqual(result_exception_name, expected_exception_name)
+
+    @staticmethod
+    def exceptions():
+        return (
+            ['AT', ['Jungholz', 'Mittelberg']],
+            ['DE', ['Büsingen am Hochrhein', 'Heligoland']],
+            ['ES', ['Canary Islands', 'Ceuta', 'Melilla']],
+            ['GB', ['Akrotiri', 'Dhekelia']],
+            ['GR', ['Mount Athos']],
+            ['IT', ["Campione d'Italia", 'Livigno']],
+            ['PT', ['Azores', 'Madeira']],
+            ['US', []],
+            ['IM', []],
+        )
+
+    @data('exceptions')
+    def exceptions_by_country(self, country, exceptions):
+        result = vat_moss.declared_residence.exceptions_by_country(country)
+        self.assertEqual(result, exceptions)

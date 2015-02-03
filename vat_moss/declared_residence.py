@@ -63,6 +63,28 @@ def calculate_rate(country_code, exception_name):
     return (rate, country_code, exception_name)
 
 
+def exceptions_by_country(country_code):
+    """
+    Returns a list of exception names for the given country
+
+    :param country_code:
+        The two-character country code for the user
+
+    :raises:
+        ValueError - if country_code is not two characers
+
+    :return:
+        A list of strings that are VAT exceptions for the country specified
+    """
+
+    if not country_code or not isinstance(country_code, str_cls) or len(country_code) != 2:
+        raise ValueError('Invalidly formatted country code')
+
+    country_code = country_code.upper()
+
+    return EXCEPTIONS_BY_COUNTRY.get(country_code, [])
+
+
 def options():
     """
     Return a sorted list of dicts, each containing the keys "name", "code" and
@@ -1351,3 +1373,15 @@ def options():
             'exceptions': []
         }
     ]
+
+
+# The valid exception names, listed by country
+EXCEPTIONS_BY_COUNTRY = {
+    'AT': ['Jungholz', 'Mittelberg'],
+    'DE': ['Büsingen am Hochrhein', 'Heligoland'],
+    'ES': ['Canary Islands', 'Ceuta', 'Melilla'],
+    'GB': ['Akrotiri', 'Dhekelia'],
+    'GR': ['Mount Athos'],
+    'IT': ["Campione d'Italia", 'Livigno'],
+    'PT': ['Azores', 'Madeira']
+}
