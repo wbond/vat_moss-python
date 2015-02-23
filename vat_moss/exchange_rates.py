@@ -119,6 +119,8 @@ def fetch():
         raise WebServiceError('Unable to find <Cube time=""> tag in ECB XML')
 
     date = date_elements[0].get('time')
+    if not isinstance(date, str_cls):
+        date = date.decode('utf-8')
 
     currency_elements = envelope.findall('./eurofxref:Cube/eurofxref:Cube/eurofxref:Cube[@currency][@rate]', namespaces)
     if not currency_elements:
