@@ -211,9 +211,12 @@ def validate(vat_id):
         #    </soap:Body>
         # </soap:Envelope>
 
-        # If we don't explicitly recode to UTF-8, ElementTree stupidly uses
-        # ascii on Python 2.7
-        envelope = ElementTree.fromstring(return_xml.encode('utf-8'))
+        try:
+            # If we don't explicitly recode to UTF-8, ElementTree stupidly uses
+            # ascii on Python 2.7
+            envelope = ElementTree.fromstring(return_xml.encode('utf-8'))
+        except (ElementTree.ParseError):
+            raise WebServiceError('Unable to parse response from VIES')
 
         namespaces = {
             'soap': 'http://schemas.xmlsoap.org/soap/envelope/',
