@@ -41,7 +41,7 @@ Python 2.7, 3.3 or 3.4. *No third-party packages required.*
 
 ## Version
 
-0.10.0 - [changelog](changelog.md)
+0.11.0 - [changelog](changelog.md)
 
 ## Installation
 
