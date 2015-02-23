@@ -14,7 +14,6 @@ from . import rates
 from .errors import UndefinitiveError
 
 
-
 def calculate_rate(country_code, subdivision, city, address_country_code=None, address_exception=None):
     """
     Calculates the VAT rate from the data returned by a GeoLite2 database

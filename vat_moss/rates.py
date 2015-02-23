@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 from decimal import Decimal
 
 
-
 # The rates used here are pull from the following sources December 17, 2014:
 #
 # http://ec.europa.eu/taxation_customs/resources/documents/taxation/vat/how_vat_works/rates/vat_rates_en.pdf
@@ -55,43 +54,42 @@ from decimal import Decimal
 #     Mittelberg - Austria - 19%
 
 
-
 # There are country entries and exceptions entries for places that are listed
 # on the VAT exceptions list. A value of None means no VAT is to be collected.
 BY_COUNTRY = {
-    'AT': { # Austria
+    'AT': {  # Austria
         'rate': Decimal('0.20'),
         'exceptions': {
             'Jungholz': Decimal('0.19'),
             'Mittelberg': Decimal('0.19')
         }
     },
-    'BE': { # Belgium
+    'BE': {  # Belgium
         'rate': Decimal('0.21')
     },
-    'BG': { # Bulgaria
+    'BG': {  # Bulgaria
         'rate': Decimal('0.20')
     },
-    'CY': { # Cyprus
+    'CY': {  # Cyprus
         'rate': Decimal('0.19')
     },
-    'CZ': { # Czech Republic
+    'CZ': {  # Czech Republic
         'rate': Decimal('0.21')
     },
-    'DE': { # Germany
+    'DE': {  # Germany
         'rate': Decimal('0.19'),
         'exceptions': {
             'Büsingen am Hochrhein': Decimal('0.0'),
             'Heligoland': Decimal('0.0')
         }
     },
-    'DK': { # Denmark
+    'DK': {  # Denmark
         'rate': Decimal('0.25')
     },
-    'EE': { # Estonia
+    'EE': {  # Estonia
         'rate': Decimal('0.20')
     },
-    'ES': { # Spain
+    'ES': {  # Spain
         'rate': Decimal('0.21'),
         'exceptions': {
             'Canary Islands': Decimal('0.0'),
@@ -99,13 +97,13 @@ BY_COUNTRY = {
             'Melilla': Decimal('0.0')
         }
     },
-    'FI': { # Finland
+    'FI': {  # Finland
         'rate': Decimal('0.24')
     },
-    'FR': { # France
+    'FR': {  # France
         'rate': Decimal('0.20')
     },
-    'GB': { # United Kingdom
+    'GB': {  # United Kingdom
         'rate': Decimal('0.20'),
         'exceptions': {
             # UK RAF Bases in Cyprus are taxed at Cyprus rate
@@ -113,76 +111,76 @@ BY_COUNTRY = {
             'Dhekelia': (Decimal('0.19'), 'CY', None)
         }
     },
-    'GR': { # Greece
+    'GR': {  # Greece
         'rate': Decimal('0.23'),
         'exceptions': {
             'Mount Athos': Decimal('0.0')
         }
     },
-    'HR': { # Croatia
+    'HR': {  # Croatia
         'rate': Decimal('0.25')
     },
-    'HU': { # Hungary
+    'HU': {  # Hungary
         'rate': Decimal('0.27')
     },
-    'IE': { # Ireland
+    'IE': {  # Ireland
         'rate': Decimal('0.23')
     },
-    'IT': { # Italy
+    'IT': {  # Italy
         'rate': Decimal('0.22'),
         'exceptions': {
             "Campione d'Italia": Decimal('0.0'),
             'Livigno': Decimal('0.0')
         }
     },
-    'LT': { # Lithuania
+    'LT': {  # Lithuania
         'rate': Decimal('0.21')
     },
-    'LU': { # Luxembourg
+    'LU': {  # Luxembourg
         'rate': Decimal('0.15')
     },
-    'LV': { # Latvia
+    'LV': {  # Latvia
         'rate': Decimal('0.21')
     },
-    'MT': { # Malta
+    'MT': {  # Malta
         'rate': Decimal('0.18')
     },
-    'NL': { # Netherlands
+    'NL': {  # Netherlands
         'rate': Decimal('0.21')
     },
-    'PL': { # Poland
+    'PL': {  # Poland
         'rate': Decimal('0.23')
     },
-    'PT': { # Portugal
+    'PT': {  # Portugal
         'rate': Decimal('0.23'),
         'exceptions': {
             'Azores': Decimal('0.0'),
             'Madeira': Decimal('0.0')
         }
     },
-    'RO': { # Romania
+    'RO': {  # Romania
         'rate': Decimal('0.24')
     },
-    'SE': { # Sweden
+    'SE': {  # Sweden
         'rate': Decimal('0.25')
     },
-    'SI': { # Slovenia
+    'SI': {  # Slovenia
         'rate': Decimal('0.22')
     },
-    'SK': { # Slovakia
+    'SK': {  # Slovakia
         'rate': Decimal('0.20')
     },
 
     # Countries associated with EU countries that have a special VAT rate
-    'MC': { # Monaco - France
+    'MC': {  # Monaco - France
         'rate': Decimal('0.20')
     },
-    'IM': { # Isle of Man - United Kingdom
+    'IM': {  # Isle of Man - United Kingdom
         'rate': Decimal('0.20')
     },
 
     # Non-EU with their own VAT collection requirements
-    'NO': { # Norway
+    'NO': {  # Norway
         'rate': Decimal('0.25')
     }
 }

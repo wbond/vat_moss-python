@@ -9,15 +9,14 @@ import cgi
 try:
     # Python 3
     from urllib.request import Request, urlopen
-    from urllib.error import HTTPError, URLError
+    from urllib.error import HTTPError
     str_cls = str
 except (ImportError):
     # Python 2
-    from urllib2 import Request, urlopen, HTTPError, URLError
+    from urllib2 import Request, urlopen, HTTPError
     str_cls = unicode
 
 from .errors import InvalidError, WebServiceError, WebServiceUnavailableError
-
 
 
 def validate(vat_id):
@@ -244,119 +243,119 @@ def validate(vat_id):
 #  - http://ec.europa.eu/taxation_customs/vies/faq.html
 #  - http://www.skatteetaten.no/en/International-pages/Felles-innhold-benyttes-i-flere-malgrupper/Brochure/Guide-to-value-added-tax-in-Norway/?chapter=7159
 ID_PATTERNS = {
-    'AT': { # Austria
+    'AT': {  # Austria
         'regex': '^U\\d{8}$',
         'country_code': 'AT'
     },
-    'BE': { # Belgium
+    'BE': {  # Belgium
         'regex': '^(1|0?)\\d{9}$',
         'country_code': 'BE'
     },
-    'BG': { # Bulgaria
+    'BG': {  # Bulgaria
         'regex': '^\\d{9,10}$',
         'country_code': 'BG'
     },
-    'CY': { # Cyprus
+    'CY': {  # Cyprus
         'regex': '^\\d{8}[A-Z]$',
         'country_code': 'CY'
     },
-    'CZ': { # Czech Republic
+    'CZ': {  # Czech Republic
         'regex': '^\\d{8,10}$',
         'country_code': 'CZ'
     },
-    'DE': { # Germany
+    'DE': {  # Germany
         'regex': '^\\d{9}$',
         'country_code': 'DE'
     },
-    'DK': { # Denmark
+    'DK': {  # Denmark
         'regex': '^\\d{8}$',
         'country_code': 'DK'
     },
-    'EE': { # Estonia
+    'EE': {  # Estonia
         'regex': '^\\d{9}$',
         'country_code': 'EE'
     },
-    'EL': { # Greece
+    'EL': {  # Greece
         'regex': '^\\d{9}$',
         'country_code': 'GR'
     },
-    'ES': { # Spain
+    'ES': {  # Spain
         'regex': '^[A-Z0-9]\\d{7}[A-Z0-9]$',
         'country_code': 'ES'
     },
-    'FI': { # Finland
+    'FI': {  # Finland
         'regex': '^\\d{8}$',
         'country_code': 'FI'
     },
-    'FR': { # France
+    'FR': {  # France
         'regex': '^[A-Z0-9]{2}\\d{9}$',
         'country_code': 'FR'
     },
-    'GB': { # United Kingdom
+    'GB': {  # United Kingdom
         'regex': '^(GD\\d{3}|HA\\d{3}|\\d{9}|\\d{12})$',
         'country_code': 'GB'
     },
-    'HR': { # Croatia
+    'HR': {  # Croatia
         'regex': '^\\d{11}$',
         'country_code': 'HR'
     },
-    'HU': { # Hungary
+    'HU': {  # Hungary
         'regex': '^\\d{8}$',
         'country_code': 'HU'
     },
-    'IE': { # Ireland
+    'IE': {  # Ireland
         'regex': '^(\\d{7}[A-Z]{1,2}|\\d[A-Z+*]\\d{5}[A-Z])$',
         'country_code': 'IE'
     },
-    'IT': { # Italy
+    'IT': {  # Italy
         'regex': '^\\d{11}$',
         'country_code': 'IT'
     },
-    'LT': { # Lithuania
+    'LT': {  # Lithuania
         'regex': '^(\\d{9}|\\d{12})$',
         'country_code': 'LT'
     },
-    'LU': { # Luxembourg
+    'LU': {  # Luxembourg
         'regex': '^\\d{8}$',
         'country_code': 'LU'
     },
-    'LV': { # Latvia
+    'LV': {  # Latvia
         'regex': '^\\d{11}$',
         'country_code': 'LV'
     },
-    'MT': { # Malta
+    'MT': {  # Malta
         'regex': '^\\d{8}$',
         'country_code': 'MT'
     },
-    'NL': { # Netherlands
+    'NL': {  # Netherlands
         'regex': '^\\d{9}B\\d{2}$',
         'country_code': 'NL'
     },
-    'NO': { # Norway
+    'NO': {  # Norway
         'regex': '^\\d{9}MVA$',
         'country_code': 'NO'
     },
-    'PL': { # Poland
+    'PL': {  # Poland
         'regex': '^\\d{10}$',
         'country_code': 'PL'
     },
-    'PT': { # Portugal
+    'PT': {  # Portugal
         'regex': '^\\d{9}$',
         'country_code': 'PT'
     },
-    'RO': { # Romania
+    'RO': {  # Romania
         'regex': '^\\d{2,10}$',
         'country_code': 'RO'
     },
-    'SE': { # Sweden
+    'SE': {  # Sweden
         'regex': '^\\d{12}$',
         'country_code': 'SE'
     },
-    'SI': { # Slovenia
+    'SI': {  # Slovenia
         'regex': '^\\d{8}$',
         'country_code': 'SI'
     },
-    'SK': { # Slovakia
+    'SK': {  # Slovakia
         'regex': '^\\d{10}$',
         'country_code': 'SK'
     },

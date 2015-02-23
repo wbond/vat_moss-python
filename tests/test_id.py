@@ -66,7 +66,7 @@ class IdTests(unittest.TestCase):
                 self.assertEqual(expected_normalized_vat_id, normalized_vat_id)
             else:
                 self.assertEqual(expected_normalized_vat_id, result)
-        except (vat_moss.errors.WebServiceUnavailableError) as e:
+        except (vat_moss.errors.WebServiceUnavailableError):
             return unittest.skip('VIES webservice unavailable')
 
     @data('invalid_ids')

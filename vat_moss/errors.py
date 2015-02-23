@@ -11,8 +11,8 @@ except (ImportError):
     str_cls = unicode
 
 
-
 class UndefinitiveError(ValueError):
+
     """
     An error representing an undefinitive answer to determining what VAT rate
     a user is subject to
@@ -22,6 +22,7 @@ class UndefinitiveError(ValueError):
 
 
 class InvalidError(ValueError):
+
     """
     An error representing an invalid VAT ID
     """
@@ -30,6 +31,7 @@ class InvalidError(ValueError):
 
 
 class WebServiceError(URLError):
+
     """
     If there was an unexpected result from a call to one of the VAT validation
     APIs
@@ -39,6 +41,7 @@ class WebServiceError(URLError):
 
 
 class WebServiceUnavailableError(WebServiceError):
+
     """
     If the VIES service VAT ID check was unavailable at the time of the request
     """

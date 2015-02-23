@@ -15,7 +15,6 @@ from . import rates
 from .errors import UndefinitiveError
 
 
-
 def calculate_rate(phone_number, address_country_code=None, address_exception=None):
     """
     Calculates the VAT rate based on a telephone number
@@ -541,7 +540,7 @@ CALLING_CODE_MAPPING = {
             'regex': '357',
             'country_code': 'CY'
         },
-        { # Åland Islands (to exclude from FI)
+        {  # Åland Islands (to exclude from FI)
             'regex': '35818',
             'country_code': 'AX'
         },
@@ -675,15 +674,15 @@ CALLING_CODE_MAPPING = {
             'regex': '43',
             'country_code': 'AT'
         },
-        { # Guernsey (to exclude from GB)
+        {  # Guernsey (to exclude from GB)
             'regex': '44(148|7781|7839|7911)',
             'country_code': 'GG'
         },
-        { # Jersey (to exclude from GB)
+        {  # Jersey (to exclude from GB)
             'regex': '44(153|7509|7797|7937|7700|7829)',
             'country_code': 'JE'
         },
-        { # Isle of Man
+        {  # Isle of Man
             'regex': '44(162|7624|7524|7924)',
             'country_code': 'IM'
         },

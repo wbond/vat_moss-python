@@ -14,7 +14,6 @@ except (NameError):
 from . import rates
 
 
-
 def calculate_rate(country_code, postal_code, city):
     """
     Calculates the VAT rate that should be collected based on address

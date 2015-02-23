@@ -13,7 +13,6 @@ except (NameError):
 from . import rates
 
 
-
 def calculate_rate(country_code, exception_name):
     """
     Calculates the VAT rate for a customer based on their declared country

@@ -13,6 +13,5 @@ elif len(sys.argv) > 1 and sys.argv[1] == '--skip-id':
     del sys.argv[1]
 
 
-
 if __name__ == '__main__':
     unittest.main()

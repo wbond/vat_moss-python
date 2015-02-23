@@ -1,19 +1,17 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import re
 from xml.etree import ElementTree
 import cgi
 from decimal import Decimal
 
 try:
     # Python 3
-    from urllib.request import Request, urlopen
-    from urllib.error import HTTPError, URLError
+    from urllib.request import urlopen
     str_cls = str
 except (ImportError):
     # Python 2
-    from urllib2 import Request, urlopen, HTTPError, URLError
+    from urllib2 import urlopen
     str_cls = unicode
 
 try:
