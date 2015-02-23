@@ -19,26 +19,21 @@ except (ImportError):
 from .errors import InvalidError, WebServiceError, WebServiceUnavailableError
 
 
-def validate(vat_id):
+def normalize(vat_id):
     """
-    Runs some basic checks to ensure a VAT ID looks properly formatted. If so,
-    checks it against the VIES system for EU VAT IDs or data.brreg.no for
-    Norwegian VAT ID.
+    Accepts a VAT ID and normaizes it, getting rid of spaces, periods, dashes
+    etc and converting it to upper case.
 
     :param vat_id:
         The VAT ID to check. Allows "GR" prefix for Greece, even though it
         should be "EL".
 
     :raises:
-        ValueError - If the is not a string or is not in the format of two characters number an identifier
-        InvalidError - If the VAT ID is not valid
-        WebServiceUnavailableError - If the VIES VAT ID service is unable to process the request - this is fairly common
-        WebServiceError - If there was an error parsing the response from the server - usually this means something changed in the webservice
-        urllib.error.URLError/urllib2.URLError - If there is an issue communicating with VIES or data.brreg.no
+        ValueError - If the is not a string or is not in the format of two characters plus an identifier
 
     :return:
         None if the VAT ID is blank or not for an EU country or Norway
-        A tuple of (two-character country code, normalized VAT id, company name) if valid
+        Otherwise a normalized string containing the VAT ID
     """
 
     if not vat_id:
@@ -65,6 +60,38 @@ def validate(vat_id):
 
     if country_prefix not in ID_PATTERNS:
         return None
+
+    return vat_id
+
+
+def validate(vat_id):
+    """
+    Runs some basic checks to ensure a VAT ID looks properly formatted. If so,
+    checks it against the VIES system for EU VAT IDs or data.brreg.no for
+    Norwegian VAT ID.
+
+    :param vat_id:
+        The VAT ID to check. Allows "GR" prefix for Greece, even though it
+        should be "EL".
+
+    :raises:
+        ValueError - If the is not a string or is not in the format of two characters plus an identifier
+        InvalidError - If the VAT ID is not valid
+        WebServiceUnavailableError - If the VIES VAT ID service is unable to process the request - this is fairly common
+        WebServiceError - If there was an error parsing the response from the server - usually this means something changed in the webservice
+        urllib.error.URLError/urllib2.URLError - If there is an issue communicating with VIES or data.brreg.no
+
+    :return:
+        None if the VAT ID is blank or not for an EU country or Norway
+        A tuple of (two-character country code, normalized VAT id, company name) if valid
+    """
+
+    vat_id = normalize(vat_id)
+
+    if not vat_id:
+        return vat_id
+
+    country_prefix = vat_id[0:2]
 
     number = vat_id[2:]
 

@@ -57,6 +57,11 @@ class IdTests(unittest.TestCase):
         )
 
     @data('valid_ids', True)
+    def normalize(self, vat_id, expected_normalized_vat_id, expected_country_code):
+        result = vat_moss.id.normalize(vat_id)
+        self.assertEqual(expected_normalized_vat_id, result)
+
+    @data('valid_ids', True)
     def validate_id(self, vat_id, expected_normalized_vat_id, expected_country_code):
         try:
             result = vat_moss.id.validate(vat_id)
