@@ -137,7 +137,7 @@ BY_COUNTRY = {
         'rate': Decimal('0.21')
     },
     'LU': {  # Luxembourg
-        'rate': Decimal('0.15')
+        'rate': Decimal('0.17')
     },
     'LV': {  # Latvia
         'rate': Decimal('0.21')
@@ -154,8 +154,8 @@ BY_COUNTRY = {
     'PT': {  # Portugal
         'rate': Decimal('0.23'),
         'exceptions': {
-            'Azores': Decimal('0.0'),
-            'Madeira': Decimal('0.0')
+            'Azores': Decimal('0.18'),
+            'Madeira': Decimal('0.22')
         }
     },
     'RO': {  # Romania
@@ -184,3 +184,4 @@ BY_COUNTRY = {
         'rate': Decimal('0.25')
     }
 }
+
